@@ -1,11 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
-import '@esri/calcite-components/dist/calcite/calcite.css';
+
 import { defineCustomElements, setAssetPath } from '@esri/calcite-components/dist/custom-elements';
 
-setAssetPath(import.meta.url);
+import App from './App'
+
+import './index.css'
+import '@esri/calcite-components/dist/calcite/calcite.css';
+
+setAssetPath(location.href);
 defineCustomElements();
 
 ReactDOM.render(
