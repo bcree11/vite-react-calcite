@@ -1,18 +1,37 @@
-import { useState } from 'react'
-import logo from './logo.svg'
+import { useEffect, useRef, useState } from 'react'
+
+import MapView from "@arcgis/core/views/MapView";
+import WebMap from "@arcgis/core/WebMap";
+
 import './App.css'
-import '@esri/calcite-components/dist/calcite/calcite.css';
+
 import { CalciteButton, CalciteValueList, CalciteValueListItem } from "@esri/calcite-components-react";
 
 function App() {
   const [count, setCount] = useState(0)
+  const mapDiv = useRef(null);
+
+  useEffect(() => {
+    if (mapDiv.current) {
+      /**
+       * Initialize application
+       */
+      const webmap = new WebMap({
+        portalItem: {
+          id: "aa1d3f80270146208328cf66d022e09c"
+        }
+      });
+
+      const view = new MapView({
+        container: mapDiv.current,
+        map: webmap
+      });
+    }
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <div style={{width: "200px", paddingBottom: "30px"}}>
-          <CalciteButton>Random</CalciteButton>
-        </div>
         <div style={{width: "200px"}}>
           <CalciteValueList drag-enabled>
             <CalciteValueListItem label="Dogs" value="dogs"></CalciteValueListItem>
@@ -20,34 +39,9 @@ function App() {
           </CalciteValueList>
         </div>
         <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
+        <CalciteButton onClick={() => setCount((count) => count + 1)}>count is: {count}</CalciteButton>
       </header>
+      <div className="mapDiv" ref={mapDiv}></div>
     </div>
   )
 }
