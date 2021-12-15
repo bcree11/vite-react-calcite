@@ -5,7 +5,7 @@ import App from './App'
 import '@esri/calcite-components/dist/calcite/calcite.css';
 import { defineCustomElements, setAssetPath } from '@esri/calcite-components/dist/custom-elements';
 
-setAssetPath(document.baseURI+"main.tsx");
+setAssetPath(import.meta.url);
 defineCustomElements();
 
 ReactDOM.render(
